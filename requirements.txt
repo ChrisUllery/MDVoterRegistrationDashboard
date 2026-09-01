@@ -1,2 +1,7 @@
 pandas==2.3.3
 pdfplumber==0.11.10
+geopandas==1.1.4
+numpy==2.5.2
+plotly==7.0.0
+requests==2.34.2
+lxml==6.1.2

@@ -1577,7 +1577,22 @@ def build_dashboard(fig, statewide, source_date, jurisdiction_stats):
         }, 2500);
     }
 
-    selector.addEventListener("change", renderAnalysis);
+    selector.addEventListener("change", () => {
+        renderAnalysis();
+
+        const data = regionData[selector.value];
+
+        if (
+            data &&
+            data.display !== "Statewide" &&
+            typeof gtag === "function"
+        ) {
+            gtag("event", "jurisdiction_view", {
+                jurisdiction: data.display
+            });
+        }
+    });
+
     copyButton.addEventListener("click", copyAnalysis);
     renderAnalysis();
 })();
@@ -1588,7 +1603,15 @@ def build_dashboard(fig, statewide, source_date, jurisdiction_stats):
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8T7GEXXEGB"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', 'G-8T7GEXXEGB');
+</script><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Maryland Voter Registration Dashboard</title>
 
@@ -2059,6 +2082,8 @@ if __name__ == "__main__":
     )
 
     print("\nDone.")
+
+
 
 
 

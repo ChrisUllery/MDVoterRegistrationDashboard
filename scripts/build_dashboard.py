@@ -757,6 +757,8 @@ def build_dashboard(fig, statewide, source_date, jurisdiction_stats):
             "margin_pct": abs(float(row["dr_margin_pct"])),
             "signed_margin_pct": float(row["dr_margin_pct"]),
             "presidential_winner": str(row["winner"]),
+            "presidential_winner_votes": int(row["winner_votes"]),
+            "presidential_winner_pct": float(row["winner_pct"]),
             "presidential_margin_votes": int(row["margin_votes"]),
             "presidential_margin_pct": float(row["margin_pct"]),
             "trump_votes": int(row["trump_votes"]),
@@ -1156,9 +1158,10 @@ def build_dashboard(fig, statewide, source_date, jurisdiction_stats):
             `(${Number(data.third_pct).toFixed(2)}%) are registered with a third party ` +
             `or are unaffiliated. ${edgeSentence(data)} ` +
             `${presidentialWinner} won ${data.display} in the 2024 presidential ` +
-            `election by ${numberFormat.format(data.presidential_margin_votes)} votes, ` +
-            `a margin of ${Number(data.presidential_margin_pct).toFixed(2)} ` +
-            `percentage points.`;
+            `election with ${numberFormat.format(data.presidential_winner_votes)} votes, ` +
+            `${Number(data.presidential_winner_pct).toFixed(2).replace(/\.?0+$/, "")}% ` +
+            `of the ${numberFormat.format(data.total_presidential_votes)} votes cast ` +
+            `in the race.`;
 
         summary.textContent = text;
 
@@ -2056,6 +2059,7 @@ if __name__ == "__main__":
     )
 
     print("\nDone.")
+
 
 
 

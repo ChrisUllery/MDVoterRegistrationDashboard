@@ -1593,7 +1593,20 @@ def build_dashboard(fig, statewide, source_date, jurisdiction_stats):
         }
     });
 
-    copyButton.addEventListener("click", copyAnalysis);
+    copyButton.addEventListener("click", () => {
+        copyAnalysis();
+
+        const data = regionData[selector.value];
+
+        if (
+            data &&
+            typeof gtag === "function"
+        ) {
+            gtag("event", "copy_analysis", {
+                jurisdiction: data.display
+            });
+        }
+    });
     renderAnalysis();
 })();
 </script>
@@ -2082,6 +2095,7 @@ if __name__ == "__main__":
     )
 
     print("\nDone.")
+
 
 
 
